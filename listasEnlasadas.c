@@ -25,14 +25,19 @@ Libro *listaLibro(Libro *Lista){
 
 Libro *agregarLibro(Libro *Lista, char *nombre)
 {
-    Libro *nuevoLibro;
+    Libro *nuevoLibro, *aux;
     nuevoLibro = (Libro*) malloc(sizeof(Libro));
     nuevoLibro->nombre = nombre;
     nuevoLibro->sig = NULL;
     if(Lista == NULL){
         Lista = nuevoLibro;
     }else{
-
+        //agrega otro libro si ya tiene elementos
+        aux = Lista;
+        while(aux->sig != NULL){
+            aux = aux->sig;
+        }
+        aux->sig = nuevoLibro;       
     }
     return Lista;
 }
@@ -40,10 +45,16 @@ Libro *agregarLibro(Libro *Lista, char *nombre)
 int main(){
 
     int n;
-    Libro libro1;
+    Libro *libro1;
     Libro *Lista = listaLibro(Lista);
-    Lista = agregarLibro(Lista, "hablando de c");    
-    printf("%s", Lista->nombre);
-    printf("%lu", sizeof(libro1));
+    Lista = agregarLibro(Lista, "hablando de c");  
+    Lista = agregarLibro(Lista, "hello world pdf");
+    while(Lista != NULL){
+        printf("%s\n", Lista->nombre);
+        Lista = Lista->sig;
+    }
+    /*printf("%s", Lista->nombre);
+    printf("%p\n", Lista->sig);*/
+    //printf("%lu", sizeof(libro1));
     return 0;
 }
